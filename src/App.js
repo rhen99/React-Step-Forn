@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Form from "./components/Form";
+import Navbar from "./components/Navbar";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [info, setInfo] = useState({
+		firstName: "",
+		lastName: "",
+		age: "18",
+		bio: "",
+		occupation: "",
+		city: "",
+		state: "",
+	});
+
+	const [step, setStep] = useState(1);
+
+	const handleChange = (name, value) => {
+		setInfo({ ...info, [name]: value });
+	};
+	const nextStep = () => setStep(step + 1);
+	const prevStep = () => setStep(step - 1);
+	return (
+		<div className="App">
+			<Navbar step={step} />
+			<div className="container margin-top">
+				<form className="col s12">
+					<Form
+						step={step}
+						info={info}
+						handleChange={handleChange}
+						prevStep={prevStep}
+						nextStep={nextStep}
+					/>
+				</form>
+			</div>
+		</div>
+	);
 }
 
 export default App;
